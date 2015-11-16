@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Pacote base onde o spring vai procurar seus controllers, componentes, 
+		services -->
+	<context:component-scan base-package="com.ninjadevspace.springmvc" />
+	<!-- Adicionando suporte a anotações -->
+	<mvc:annotation-driven />
+	<!-- Informando que requisições do tipo obter recursos (javascript,imagens) 
+		não serão tratadas pelo spring. Essas requisições serão tratadas pelo servlet 
+		do servidor de aplicação -->
+	<mvc:default-servlet-handler />
+
+	<!-- Configuração do padrão das páginas html. Elas deverão estar dentro 
+		da pasta views e os arquivos terminam com a extensão jsp -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<mvc:interceptors>
+		<bean class="com.ninjadevspace.springmvc.interceptor.AuthorizerInterceptor" />
+	</mvc:interceptors>
+	
+</beans>
